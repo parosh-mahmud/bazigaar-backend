@@ -1,0 +1,46 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - backend
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Configure AWS Credentials
+        run: |
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws configure set region ${{ secrets.AWS_REGION }}
+      - name: Login to ECR
+        run: |
+          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REPO_URL }}
+      - name: Build and push Docker image
+        run: |
+          docker build -t bazigaar .
+          docker tag bazigaar:latest ${{ secrets.ECR_REPO_URL }}/bazigaar:${{ github.sha }}
+          docker push ${{ secrets.ECR_REPO_URL }}/bazigaar:${{ github.sha }}
+          docker tag ${{ secrets.ECR_REPO_URL }}/bazigaar:${{ github.sha }} ${{ secrets.ECR_REPO_URL }}/bazigaar:latest
+          docker push ${{ secrets.ECR_REPO_URL }}/bazigaar:latest
+
+      - name: Setup SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          touch ~/.ssh/testing
+          echo "$SSH_PRIVATE_KEY" | base64 -d > ~/.ssh/testing
+    
+      
+      - name: Deploy app
+        run: |
+          chmod 400 ~/.ssh/testing
+          touch ~/.ssh/known_hosts
+          ssh-keyscan ${{ secrets.AWS_SSH_DNS }} >> ~/.ssh/known_hosts
+          ssh -i ~/.ssh/testing ubuntu@${{ secrets.AWS_SSH_DNS }} "chmod +x ~/bazigaar/bazigaar-django/setup.sh && ~/bazigaar/bazigaar-django/setup.sh"

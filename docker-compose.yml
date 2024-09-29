@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=bazigaar
+      - POSTGRES_PASSWORD=Arif@125
+      - POSTGRES_DB=bazigaar
+    ports:
+      - '5434:5432'
+    volumes: 
+      - /home/ubuntu/bazigaar-admin/data:/var/lib/postgresql
+  admin:
+    build: .
+    container_name: bazigaar-admin
+    ports:
+      - "8000:8000"
+      - "8080:8000"
+    volumes:
+      - .:/bazigaar-admin
+    depends_on:
+      - db
+#volumes:
+ # db:
+  #  driver: local
