@@ -35,7 +35,7 @@ urlpatterns = [
     path('api/sup-admin/', include('SuperAdminPanel.urls'),),
     path('api/admin/', include('AdminPanel.urls'),),
     path('api/agent/', include('AgentPanel.urls'),),
-    path('lottery/', include('Lottery.urls'),),
+    path('lottery/', include('Lottery.urls'),), #Lottery Manage App
 
     # logout for all user
     path('api/logout/', knox_views.LogoutView.as_view(), name='logout_token'),

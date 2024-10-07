@@ -13,7 +13,7 @@ class CreateTicketSerializer(serializers.ModelSerializer):
     firstPrize = serializers.CharField(required=False)
     secondPrize = serializers.CharField(required=False)
     thirdPrize = serializers.CharField(required=False)
-    coverImage = serializers.CharField(required=False)
+    # coverImage = serializers.CharField(required=False)
     class Meta:
         model=Ticket
         fields="__all__"
@@ -22,7 +22,7 @@ class CreateTicketSerializer(serializers.ModelSerializer):
             'firstPrize': ('reviews.ImageSerializer', {'many': True}),
             'secondPrize': ('reviews.ImageSerializer', {'many': True}),
             'thirdPrize': ('reviews.ImageSerializer', {'many': True}),
-            'coverImage': ('reviews.ImageSerializer', {'many': True}),
+            # 'coverImage': ('reviews.ImageSerializer', {'many': True}),
         }
 
 class AdminUserUpdateSerializer(serializers.ModelSerializer):

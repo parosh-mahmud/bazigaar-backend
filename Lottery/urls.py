@@ -10,6 +10,7 @@ urlpatterns=[
     path('logout/', LogoutView.as_view(), name='rest_logout'),
     path("user-login/",UserLoginView.as_view(), name="admin-login"),
     path("make-reseller/", make_reseller, name="make-reseller"),
+    
     path('get-all/', lottery_list, name='lottery-list'),
     path('get-all/open/', open_lottery_list, name='open-lottery-list'),
     path('get-all/closed/', closed_lottery_list, name='closed-lottery-list'),
@@ -18,6 +19,9 @@ urlpatterns=[
     path('details/', get_lottery, name='get-lottery'),
     path('edit/', edit_lottery, name='edit-lottery'),
     path('delete/', delete_lottery, name='delete-lottery'),
+
+    #===========RM ============ Develop
+    path('get-lotteries/', LotteryListAPIView.as_view(), name='lottery-list'),
 
     #tickets
     path('all-tickets/', all_tickets_in_lottery, name='all-tickets'),
