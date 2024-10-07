@@ -28,25 +28,25 @@ def upload_to5(instance, filename):
 
 class Lottery(models.Model,SerializedModel):
     TYPE_CHOICES = (
-        ('P1', 'P1'),
-        ('P2', 'P2'),
-        ('P3', 'P3'),
+        ('Regular', 'Regular'),
+        ('Special', 'Special'),
+        ('Other', 'Other'),
     )
     LotteryId = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False)
-    LotteryName = models.CharField(max_length=255)
-    Price = models.IntegerField()
-    PriceAmount = models.IntegerField()
-    NumberOfWinners = models.IntegerField()
-    NumberOfTickets = models.IntegerField()
-    OpeningTime = models.DateTimeField()
-    ClosingTime = models.DateTimeField()
-    FirstPrizeName = models.CharField(max_length=255)
-    SecondPrizeName = models.CharField(max_length=255)
-    ThirdPrizeName = models.CharField(max_length=255)
-    TotalFirstPrizeWinner = models.IntegerField()
-    TotalSecondPrizeWinner = models.IntegerField()
-    TotalThirdPrizeWinner = models.IntegerField()
+    LotteryName = models.CharField(max_length=255, blank=True, null=True)
+    Price = models.IntegerField(default=0)
+    PriceAmount = models.IntegerField(default=0)
+    NumberOfWinners = models.IntegerField(default=0)
+    NumberOfTickets = models.IntegerField(default=0)
+    OpeningTime = models.DateTimeField(blank=True)
+    ClosingTime = models.DateTimeField(blank=True)
+    FirstPrizeName = models.CharField(max_length=255, blank=True, null=True)
+    SecondPrizeName = models.CharField(max_length=255, blank=True, null=True)
+    ThirdPrizeName = models.CharField(max_length=255, blank=True, null=True)
+    TotalFirstPrizeWinner = models.IntegerField(default=0)
+    TotalSecondPrizeWinner = models.IntegerField(default=0)
+    TotalThirdPrizeWinner = models.IntegerField(default=0)
     isOpen = models.BooleanField(default=True)
     isDrawComplete = models.BooleanField(default=False)
     # image_first = models.ImageField(max_length=255,upload_to=image_to_url,blank=True,null=True)
@@ -67,11 +67,14 @@ class Lottery(models.Model,SerializedModel):
     # secondPrize=ResizedImageField(upload_to=upload_to3)
     # thirdPrize=ResizedImageField(upload_to=upload_to4)
     # new props
-    type = models.CharField(max_length=10, choices=TYPE_CHOICES, blank=True)
+
     banner_color = models.CharField(max_length=20, blank=True, null=True)
-    created_at = models.DateTimeField(auto_now=True)
-    update_at = models.DateTimeField(auto_now=True)
+    type = models.CharField(max_length=10, choices=TYPE_CHOICES, default='Regular', blank=True)
     ticket_id = models.IntegerField(null=True, blank=True)
+
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.LotteryName

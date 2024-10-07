@@ -4,6 +4,9 @@ import string
 from websocket import create_connection
 from datetime import datetime
 from django.conf import settings
+
+from rest_framework import generics
+
 from notifications.models import EventNotification
 from notifications.serializers import EventNotificationSerializer
 from django.http import JsonResponse
@@ -20,7 +23,14 @@ from rest_framework.authtoken.models import Token
 from ticket_draw_app.models import Ticket
 from wallet_app.models import Wallet
 from .models import Lottery, LotteryTicket, Winner
-from .serializers import LotterySerializer, LotteryTicketSerializer, WinnerTicketSerializer
+
+from .serializers import (
+    LotteryListSerializer,
+    LotterySerializer, 
+    LotteryTicketSerializer, 
+    WinnerTicketSerializer,
+)
+
 from knox.views import LoginView as KnoxLoginView
 from knox.models import AuthToken
 from rest_framework import serializers
@@ -120,6 +130,7 @@ class UserLogoutView(APIView):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def lottery_list(request):
+    print("-------hi--i am here!")
     lotteries = Lottery.objects.all()
     serializer = LotterySerializer(lotteries, many=True)
     return Response(serializer.data)
@@ -400,6 +411,50 @@ def delete_lottery(request):
         return Response({'status': 'error', 'message': 'Lottery not found'}, status=400)
 
     return Response({'status': 'ok', 'message': 'Lottery deleted'}, status=200)
+
+
+#==================RM ================ Develop
+
+
+
+from rest_framework import generics, status
+from rest_framework.response import Response
+
+
+class LotteryListAPIView(generics.ListAPIView):
+    serializer_class = LotteryListSerializer
+
+    def get_queryset(self):
+        """
+        Optionally filter the Lotteries by `type` passed in query parameters.
+        Returns error if an invalid type is provided.
+        """
+        print("I am Here--for Lottery List!")
+        queryset = Lottery.objects.all()
+        lottery_type = self.request.query_params.get('type', None)  # 'type' is the query parameter
+
+        # Validate the lottery_type
+        valid_types = ['Regular', 'Special', 'Other']
+        if lottery_type and lottery_type not in valid_types:
+            # Raise an error for invalid type
+            raise ValueError(f"Invalid type '{lottery_type}'. Must be one of {valid_types}.")
+
+        if lottery_type in valid_types:
+            queryset = queryset.filter(type=lottery_type)
+
+        return queryset
+
+    def list(self, request, *args, **kwargs):
+        """
+        Override the list method to handle errors gracefully.
+        """
+        try:
+            return super().list(request, *args, **kwargs)
+        except ValueError as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
 
 
 class UserSerializer(serializers.ModelSerializer):

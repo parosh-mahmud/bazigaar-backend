@@ -59,3 +59,10 @@ class WinnerTicketSerializer(serializers.ModelSerializer):
         model = Winner
         fields = '__all__'
 
+
+
+
+class LotteryListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Lottery
+        fields = '__all__'
