@@ -12,6 +12,9 @@ urlpatterns=[
     path("make-reseller/", make_reseller, name="make-reseller"),
     
     path('get-all/', lottery_list, name='lottery-list'),
+    path('get-all-draw-lottery/', DrawLotteryListAPIView.as_view()), # RM Dev
+
+
     path('get-all/open/', open_lottery_list, name='open-lottery-list'),
     path('get-all/closed/', closed_lottery_list, name='closed-lottery-list'),
     path('create/', create_lottery, name='lottery-creation'),

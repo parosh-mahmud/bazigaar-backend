@@ -136,6 +136,48 @@ def lottery_list(request):
     return Response(serializer.data)
 
 
+#================== Draw Lottery List ========= RM =====
+class DrawLotteryListAPIView(APIView):
+    """
+    API view to retrieve a list of lotteries.
+    Supports filtering by 'type' (Regular, Special, Other).
+    If no 'type' query parameter is provided, returns all lotteries.
+    """
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            # Get 'type' from query parameters
+            lottery_type = request.query_params.get('type', None)
+
+            # Fetch all lotteries by default
+            queryset = Lottery.objects.all()
+
+            # Filter by lottery type if provided
+            if lottery_type:
+                if lottery_type not in ['Regular', 'Special', 'Other']:
+                    return Response(
+                        {"error": "Invalid type parameter. Valid options are 'Regular', 'Special', 'Other'."},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+                queryset = queryset.filter(type=lottery_type)
+
+            # Serialize the data
+            serializer = LotterySerializer(queryset, many=True)
+
+            # Return response with serialized data
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            # Handle unexpected exceptions and provide a professional error response
+            return Response(
+                {"error": "An unexpected error occurred. Please try again later.", "details": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+        
+
+
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def logout(request):
