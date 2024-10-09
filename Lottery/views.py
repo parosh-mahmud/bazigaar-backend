@@ -282,15 +282,17 @@ def create_lottery(request):
         test = convert_lottery_to_ticket(serializer.data, lottery)
         print("test")
         print(test)
-        # print("hi")
+        print("hi========1===")
         lotteryTicketSerializer = CreateTicketSerializer(data=test)
+        print("hi========2===")
+
         # print(lotteryTicketSerializer)
         # print(lotteryTicketSerializer.is_valid())
         # print(lotteryTicketSerializer)
         if lotteryTicketSerializer.is_valid():
             print("hello")
             lotteryTicketSerializer.save()
-            print(lotteryTicketSerializer.data)
+            # print(lotteryTicketSerializer.data)
             return Response(lotteryTicketSerializer.data, status=200)
         else:
             return Response(lotteryTicketSerializer.errors, status=400)
@@ -332,6 +334,7 @@ def create_lottery_form(request):
 @permission_classes([IsAdminUser])
 def get_lottery(request):
     lottery_id = request.query_params.get('LotteryId', None)
+    print("Lottery Id is: ", lottery_id)
     try:
         lottery = Lottery.objects.get(LotteryId=lottery_id)
     except Lottery.DoesNotExist:

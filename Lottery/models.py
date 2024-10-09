@@ -54,12 +54,11 @@ class Lottery(models.Model,SerializedModel):
     # image_third = models.ImageField(max_length=255,upload_to=image_to_url,blank=True,null=True)
     # image_banner = models.ImageField(max_length=255,upload_to=image_to_url,blank=True,null=True)
     # image_prizes = models.ImageField(max_length=255,upload_to=image_to_url,blank=True,null=True)
+    image_prizes = ResizedImageField(upload_to=upload_to1)
     image_first = ResizedImageField(upload_to=upload_to2)
     image_second = ResizedImageField(upload_to=upload_to3)
     image_third = ResizedImageField(upload_to=upload_to4)
-    image_banner = ResizedImageField(
-        upload_to=upload_to5, null=True, blank=True)
-    image_prizes = ResizedImageField(upload_to=upload_to1)
+    image_banner = ResizedImageField(upload_to=upload_to5, null=True, blank=True)
 
     # prizeImage=ResizedImageField(upload_to=upload_to1)
     # coverImage=ResizedImageField(upload_to=upload_to5,null=True,blank=True)

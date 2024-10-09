@@ -19,7 +19,7 @@ urlpatterns=[
     path('get-all/closed/', closed_lottery_list, name='closed-lottery-list'),
     path('create/', create_lottery, name='lottery-creation'),
     path('create-with-file/', create_lottery_form, name='lottery-creation-test'),
-    path('details/', get_lottery, name='get-lottery'),
+    path('details/', get_lottery, name='get-lottery'), #next--
     path('edit/', edit_lottery, name='edit-lottery'),
     path('delete/', delete_lottery, name='delete-lottery'),
 
