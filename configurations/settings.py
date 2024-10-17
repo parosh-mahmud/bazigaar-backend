@@ -158,6 +158,7 @@ DATABASES = {
     }
 }
 
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -221,12 +222,10 @@ EMAIL_HOST_PASSWORD = 'nxgffwnayctrlcsy'
 
 
 STATIC_URL = '/static/'
-
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, '/static/upload') #/static/upload/
 
-STATIC_ROOT = os.path.join(BASE_DIR, '/static/upload')
-
-MEDIA_URL = '/media/'
+MEDIA_URL = '/media/' #/media/
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 

@@ -38,7 +38,9 @@ class TicketListAPIView(ListAPIView):
     # permission_classes = [AllowAny,]
 
     def list(self, request, *args, **kwargs):
+        print(" i am here--for ticket details")
         queryset = self.filter_queryset(self.get_queryset())
+
 
         page = self.paginate_queryset(queryset)
         if page is not None:
@@ -151,7 +153,10 @@ def convert_ticket_buy_history(ticketBuyHistory_obj, luckynumber, buyerid, lotte
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def purchaseTicket(request):
+    print("-------i am here to buy ticket!---1---")
     count = int(request.data["count"])
+    print("-------i am here to buy ticket!---2---")
+
     # if count is str:
     #     count=int(count)
     """
@@ -162,13 +167,23 @@ def purchaseTicket(request):
     request.data["id"]
     numbers = request.data["numbers"]
     user: User = request.user
+    print("useris : ", user)
 
-    balance = user.bgtoken+user.bonusbgtoken
+    # balance = user.bgtoken+user.bonusbgtoken #old
+    balance = user.bgcoin+user.bonusbgcoin #rm
+
+    print("user.bgcoin: ", user.bgcoin)
+    print("user.bonusbgcoin: ", user.bonusbgcoin)
+
+    print("Balance: ", balance)
     any = models.Ticket.objects.filter(id=request.data["id"])
     if (any.exists()):
         ticket = any[0]
         amount = ticket.price * count
         if (balance > amount):
+
+            ''' 
+            # old Code
             bgtokenToCoin = 0
             if (user.bgtoken > amount):
                 user.bgtoken -= amount
@@ -179,7 +194,25 @@ def purchaseTicket(request):
                 user.bgtoken = 0
                 user.bonusbgtoken -= amount
             coinReward = (bgtokenToCoin/100)*9
-            user.bgcoin += Decimal(coinReward,)
+            '''
+            # New Code--RM
+            bgcoinToCoin = 0
+            if (user.bgcoin > amount):
+                user.bgcoin -= amount
+                bgcoinToCoin = amount
+                print("bgcoinToCoin: ", bgcoinToCoin)
+
+            else:
+                amount -= user.bgcoin
+                bgcoinToCoin = user.bgcoin
+                user.bgcoin = 0
+                user.bonusbgcoin -= amount
+            coinReward = (bgcoinToCoin/100)*9
+            print("coinReward is: ", coinReward)
+            #----- End -------
+
+
+            # user.bgcoin += Decimal(coinReward,)
             user.save()
             ticketBuyHistory = models.TicketBuyHistory()
             ticketBuyHistory.ticket = ticket

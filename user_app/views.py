@@ -257,7 +257,9 @@ class CustomVerifyEmailView(VerifyEmailView):
 
 class CustomRegisterView(RegisterView):
     def post(self, request, *args, **kwargs):
+        print("i am here for user registration--1")
         email = request.data["email"]
+        print("i am here for user registration--2")
         any = get_user_model().objects.filter(email=email)
         if any.exists():
             user = any[0]

@@ -7,6 +7,8 @@ from django_resized import ResizedImageField
 from django.utils.timezone import now,timedelta
 from base.base import SerializedModel
 from django.contrib.auth.models import AbstractUser
+
+
 def upload_to(instance, filename):
     return 'image/profile/{filename}'.format(filename=filename)
 
@@ -14,6 +16,8 @@ def generate_random_string(length=6):
     letters_and_digits = string.ascii_letters + string.digits
     return ''.join(random.choice(letters_and_digits) for i in range(length))
 # {'nickname': ' onug', 'first_name': 'onirudda', 'last_name': 'islam', 'gender': 'M'}
+
+
 class User(AbstractUser,SerializedModel):
     profile_picture=ResizedImageField( upload_to=upload_to,blank=True, null=True,)
     isHost=models.BooleanField(default=False)
@@ -38,9 +42,13 @@ class User(AbstractUser,SerializedModel):
     last_online=models.DateTimeField(auto_now=True)
     countryCode=models.CharField(max_length=10,null=True,blank=True)
     phoneNumber=models.CharField(max_length=20,null=True,blank=True)
-    bgcoin=models.DecimalField(default=0.0,max_digits=20,decimal_places=2)
+    
+    bgcoin=models.DecimalField(default=0.0,max_digits=20,decimal_places=2) 
+    bonusbgcoin=models.DecimalField(default=0.0,max_digits=20,decimal_places=2) #RM
+
     bgtoken=models.DecimalField(default=0.0,max_digits=20,decimal_places=2)
     bonusbgtoken=models.DecimalField(default=0.0,max_digits=20,decimal_places=2)
+
     address = models.CharField(max_length=255, null=True, blank=True)
     city = models.CharField(max_length=100, null=True, blank=True)
     state = models.CharField(max_length=100, null=True, blank=True)
