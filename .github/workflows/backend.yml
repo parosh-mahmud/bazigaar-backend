@@ -16,15 +16,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # Debugging: List files after checking out the repo
+      - name: List files after checkout
+        run: ls -la
+        working-directory: ./bazigaar-backend # Assuming it's located here
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: "3.12.5" # Replace with your Python version, e.g., '3.10'
+          python-version: "3.x" # Replace with your Python version
 
       - name: Install dependencies
         run: |
           python -m venv myenv
-          source myenv/bin/activate
+          source myenv/bin/activate  # Linux-style activation
           pip install -r requirements.txt
         working-directory: ./bazigaar-backend
 
@@ -53,7 +58,7 @@ jobs:
           ssh root@188.166.209.196 "
             cd /root/bazigaar-backend &&
             git pull origin main &&
-             source myenv/bin/activate &&
+            source myenv/bin/activate &&
             pip install -r requirements.txt &&
             sudo systemctl restart gunicorn &&
             sudo systemctl reload nginx
