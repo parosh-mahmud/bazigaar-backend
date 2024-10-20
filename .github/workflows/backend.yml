@@ -37,7 +37,7 @@ jobs:
         run: |
           source myenv/bin/activate
           python manage.py test
-        working-directory: ./bazigaar-backend
+        working-directory: ./root/bazigaar-backend
 
   deploy:
     runs-on: ubuntu-latest
