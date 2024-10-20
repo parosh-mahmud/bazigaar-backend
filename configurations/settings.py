@@ -208,16 +208,22 @@ USE_TZ = True
 
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_USER = 'hog3rider474@gmail.com'
+# EMAIL_HOST_PASSWORD = 'nxgffwnayctrlcsy'
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'hog3rider474@gmail.com'
-EMAIL_HOST_PASSWORD = 'nxgffwnayctrlcsy'
-# EMAIL_HOST = 'smtp.office365.com'
-# EMAIL_HOST_USER = 'support@bazigaar.com'
-# EMAIL_HOST_PASSWORD = 'Toby7799$'
+EMAIL_HOST_USER = 'prparosh@gmail.com'  # Use your Gmail account
+EMAIL_HOST_PASSWORD = 'xbno omqy qqhz behv' 
+
+
 
 
 
