@@ -24,13 +24,13 @@ jobs:
       - name: Install dependencies
         run: |
           python -m venv myenv
-          source myenv/Scripts/activate
+          source myenv/bin/activate
           pip install -r requirements.txt
         working-directory: ./bazigaar-backend
 
       - name: Run Django tests
         run: |
-          source myenv/Scripts/activate
+          source myenv/bin/activate
           python manage.py test
         working-directory: ./bazigaar-backend
 
@@ -53,7 +53,7 @@ jobs:
           ssh root@188.166.209.196 "
             cd /root/bazigaar-backend &&
             git pull origin main &&
-            source myenv/Scripts/activate &&
+             source myenv/bin/activate &&
             pip install -r requirements.txt &&
             sudo systemctl restart gunicorn &&
             sudo systemctl reload nginx
