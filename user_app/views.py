@@ -34,6 +34,29 @@ from django.shortcuts import get_object_or_404
 User = get_user_model()
 
 
+
+# views.py
+
+from django.core.mail import send_mail
+from django.http import HttpResponse
+
+def send_test_email(request):
+    subject = 'Test Email'
+    message = 'This is a test email sent from Django.'
+    from_email = 'prparosh@gmail.com'  # Replace with your email
+    # from_email = 'rajumia.nimusoft@gmail.com'  # Replace with your email
+    recipient_list = ['rajucse00@gmail.com']  # Replace with the recipient email
+    
+    # Send email
+    print(" i am here!")
+    send_mail(subject, message, from_email, recipient_list)
+    print(" i am here--2")
+    
+    return HttpResponse('Email sent successfully!')
+
+
+
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def user_details(request, user_id):

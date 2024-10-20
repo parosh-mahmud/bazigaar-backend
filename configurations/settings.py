@@ -216,12 +216,26 @@ USE_TZ = True
 # EMAIL_HOST_USER = 'hog3rider474@gmail.com'
 # EMAIL_HOST_PASSWORD = 'nxgffwnayctrlcsy'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+#=================== Email Confiration ==========RM=========
+
+# Email For ===Local===.
+# EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# ACCOUNT_EMAIL_VERIFICATION = "none"
+# EMAIL_USE_TLS = False  # TLS should be disabled when using SSL
+# EMAIL_PORT = 465  # SSL port for Gmail
+
+
+# ===Email ===Productions===
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'user_app.custom_email_backend.CustomEmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'prparosh@gmail.com'  # Use your Gmail account
-EMAIL_HOST_PASSWORD = 'xbno omqy qqhz behv' 
+EMAIL_HOST_USER = 'prparosh@gmail.com'
+EMAIL_HOST_PASSWORD = 'xbno omqy qqhz behv'  # App-specific password
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 
 
 

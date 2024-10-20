@@ -8,6 +8,9 @@ from .views import CustomRegisterView, ResendEmailVerificationView, CustomVerify
 
 
 urlpatterns = [
+    path('send-email/', views.send_test_email, name='send_email'), #RM-FOR mail check
+
+
     path('user_details/<int:user_id>', user_details, name='details'),
     path('auth/password/reset/confirm/<id>/<token>/', CustomPasswordResetConfirmView.as_view(),
          name='password_reset_confirm'),
@@ -47,4 +50,6 @@ urlpatterns = [
     path('auth/registration/custom-reset-password-confirm/',
          customPasswordResetConfirmView, name="rest_password_reset_confirm"),
     # ref
+
+    
 ]
