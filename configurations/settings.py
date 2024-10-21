@@ -241,12 +241,27 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATIC_URL = '/static/'
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-MEDIA_URL = '/media/' #/media/
+# MEDIA_URL = '/media/' #/media/
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+STATIC_URL = '/static/'
+
+# This is the directory where `collectstatic` will gather all static files.
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Use a different directory than STATICFILES_DIRS
+
+# If you have extra directories containing static files (e.g., in your project code), use STATICFILES_DIRS.
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),  # If you have additional static files in a folder named 'static'
+]
+
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
 
 REST_FRAMEWORK = {
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
