@@ -248,16 +248,21 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 # MEDIA_URL = '/media/' #/media/
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/4.0/howto/static-files/
+
+# URL to use when referring to static files located in STATIC_ROOT.
 STATIC_URL = '/static/'
 
-# This is the directory where `collectstatic` will gather all static files.
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Use a different directory than STATICFILES_DIRS
+# The directory where `collectstatic` will gather all static files for production.
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Do not include this in STATICFILES_DIRS.
 
-# If you have extra directories containing static files (e.g., in your project code), use STATICFILES_DIRS.
+# Directories where Django will search for additional static files (besides each app's "static" directory).
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),  # If you have additional static files in a folder named 'static'
+    os.path.join(BASE_DIR, 'static'),  # Any extra static file directories (if necessary)
 ]
 
+# Media files (user-uploaded content)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
