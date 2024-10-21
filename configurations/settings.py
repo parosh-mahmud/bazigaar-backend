@@ -147,7 +147,7 @@ DATABASES = {
         'NAME': 'bazigaar',  # Database name
         'USER': 'bazigaar',  # Username
         'PASSWORD': 'parosh@321',  # Password
-        'HOST': 'localhost',  # If you’re running PostgreSQL locally
+        'HOST': 'db',  # If you’re running PostgreSQL locally
         'PORT': '5432',  # Default PostgreSQL port
     }
 }
