@@ -24,3 +24,4 @@ services:
       - /home/ubuntu/bazigaar-admin/media:/bazigaar-admin/bazigaar-backend/media # Persist media files
     depends_on:
       - db # Ensure the database starts before Django
+    command: python manage.py runserver 0.0.0.0:8000
