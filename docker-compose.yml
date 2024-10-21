@@ -11,14 +11,16 @@ services:
     ports:
       - "5434:5432"
     volumes:
-      - /home/ubuntu/bazigaar-admin/data:/var/lib/postgresql/data # Fixed volume path
+      - /home/ubuntu/bazigaar-admin/data:/var/lib/postgresql/data # Persist PostgreSQL data
 
   admin:
     build: .
     container_name: bazigaar-admin
     ports:
-      - "8000:8000" # Removed the redundant "8080:8000"
+      - "8000:8000" # The application will be served on port 8000
     volumes:
-      - .:/bazigaar-admin
+      - .:/bazigaar-admin/bazigaar-backend # Map the project directory
+      - /home/ubuntu/bazigaar-admin/static:/bazigaar-admin/bazigaar-backend/static # Persist static files
+      - /home/ubuntu/bazigaar-admin/media:/bazigaar-admin/bazigaar-backend/media # Persist media files
     depends_on:
-      - db
+      - db # Ensure the database starts before Django

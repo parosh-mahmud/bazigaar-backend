@@ -19,8 +19,9 @@ jobs:
       - name: Deploy to DigitalOcean Droplet using password
         run: |
           sshpass -p ${{ secrets.DROPLET_PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_IP }} << 'EOF'
-          cd /home/ubuntu/bazigaar-admin  # Navigate to your project directory
-          git pull origin main            # Pull the latest changes from GitHub
-          docker-compose down             # Stop the current Docker containers
-          docker-compose up --build -d    # Rebuild and restart Docker containers
+          cd /home/ubuntu/bazigaar-admin/bazigaar-backend  # Navigate to the correct directory
+          git pull origin main                             # Pull the latest changes from GitHub
+          docker-compose run admin python manage.py collectstatic --noinput  # Collect static files
+          docker-compose down                              # Stop the current Docker containers
+          docker-compose up --build -d                     # Rebuild and restart Docker containers
           EOF
